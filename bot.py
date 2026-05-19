@@ -400,43 +400,43 @@ async def rekap7(event):
 
     now = datetime.now(wib)
 
-    # JIKA ADA JAM
-    if jam is not None:
+    # ================= JIKA ADA JAM =================
+if jam is not None:
 
-        start = datetime(
-            now.year,
-            now.month,
-            now.day,
-            0,
-            0,
-            0,
-            tzinfo=wib
-        ) - timedelta(days=6)
+    start = datetime(
+        now.year,
+        now.month,
+        now.day,
+        0,
+        0,
+        0,
+        tzinfo=wib
+    ) - timedelta(days=6)
 
-        end = datetime(
-            now.year,
-            now.month,
-            now.day,
-            jam,
-            menit,
-            59,
-            tzinfo=wib
-        )
+    end = datetime(
+        now.year,
+        now.month,
+        now.day,
+        jam,
+        menit,
+        59,
+        tzinfo=wib
+    )
 
-        # TANPA JAM
-        else:
+# ================= TANPA JAM =================
+else:
 
-            start = datetime(
-            now.year,
-            now.month,
-            now.day,
-            0,
-            0,
-            0,
-            tzinfo=wib
-        ) - timedelta(days=6)
+    start = datetime(
+        now.year,
+        now.month,
+        now.day,
+        0,
+        0,
+        0,
+        tzinfo=wib
+    ) - timedelta(days=6)
 
-        end = now
+    end = now
 
 # ================= NABUNG =================
 @client.on(events.NewMessage(pattern=r'^/tambah\s+'))
