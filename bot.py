@@ -279,7 +279,6 @@ async def rekap_hari_ini(event):
 
     await event.reply(hasil)
 
-
 # ================= REKAP KEMARIN =================
 @client.on(events.NewMessage(pattern=r'^/rekapkata1(?:\s+(.+))?$'))
 async def rekap_kemarin(event):
@@ -308,30 +307,43 @@ async def rekap_kemarin(event):
 
     now = datetime.now(wib)
 
+    kemarin = now - timedelta(days=1)
+
     start = datetime(
-        now.year,
-        now.month,
-        now.day,
+        kemarin.year,
+        kemarin.month,
+        kemarin.day,
         0,
         0,
         0,
         tzinfo=wib
-    ) - timedelta(days=1)
+    )
 
+    # JIKA ADA JAM
     if jam is not None:
 
         end = datetime(
-            now.year,
-            now.month,
-            now.day,
+            kemarin.year,
+            kemarin.month,
+            kemarin.day,
             jam,
             menit,
             59,
             tzinfo=wib
         )
 
+    # TANPA JAM
     else:
-        end = now
+
+        end = datetime(
+            kemarin.year,
+            kemarin.month,
+            kemarin.day,
+            23,
+            59,
+            59,
+            tzinfo=wib
+        )
 
     counts = await proses_rekap(
         chat,
@@ -345,11 +357,11 @@ async def rekap_kemarin(event):
     if jam is not None:
         jam_text = f"{jam:02d}:{menit:02d}"
     else:
-        jam_text = now.strftime("%H:%M")
+        jam_text = "23:59"
 
     hasil = (
         f"📊 JUMLAH PESAN KEMARIN\n"
-        f"📅 {(now - timedelta(days=1)).strftime('%d-%m-%Y')}\n"
+        f"📅 {kemarin.strftime('%d-%m-%Y')}\n"
         f"🕒 00:00 - {jam_text}\n\n"
     )
 
