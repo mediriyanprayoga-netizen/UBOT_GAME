@@ -376,7 +376,6 @@ async def rekap_kemarin(event):
 async def rekap7(event):
 
     if not event.pattern_match.group(1):
-
         await event.reply(
             "Format:\n"
             "/rekapkata7 kata\n"
@@ -385,7 +384,6 @@ async def rekap7(event):
             "/rekapkata7 kata (-100xxxx)\n"
             "/rekapkata7 kata (-100xxxx) (23:59)"
         )
-
         return
 
     text = event.pattern_match.group(1)
@@ -396,10 +394,9 @@ async def rekap7(event):
         return
 
     wib = timezone(timedelta(hours=7))
-
     now = datetime.now(wib)
 
-    # ================= JIKA ADA JAM =================
+    # ADA JAM
     if jam is not None:
 
         start = datetime(
@@ -422,7 +419,7 @@ async def rekap7(event):
             tzinfo=wib
         )
 
-    # ================= TANPA JAM =================
+    # TANPA JAM
     else:
 
         start = datetime(
@@ -458,25 +455,9 @@ async def rekap7(event):
     )
 
     hasil += f"📝 PESAN DICARI: {', '.join(kata_list)}\n"
-
     hasil += list_user
 
     await event.reply(hasil)
-
-# ================= TANPA JAM =================
-else:
-
-    start = datetime(
-        now.year,
-        now.month,
-        now.day,
-        0,
-        0,
-        0,
-        tzinfo=wib
-    ) - timedelta(days=6)
-
-    end = now
 
 # ================= NABUNG =================
 @client.on(events.NewMessage(pattern=r'^/tambah\s+'))
