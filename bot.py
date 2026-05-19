@@ -371,7 +371,6 @@ async def rekap_kemarin(event):
 
     await event.reply(hasil)
 
-
 # ================= REKAP 7 HARI =================
 @client.on(events.NewMessage(pattern=r'^/rekapkata7(?:\s+(.+))?$'))
 async def rekap7(event):
@@ -401,27 +400,68 @@ async def rekap7(event):
     now = datetime.now(wib)
 
     # ================= JIKA ADA JAM =================
-if jam is not None:
+    if jam is not None:
 
-    start = datetime(
-        now.year,
-        now.month,
-        now.day,
-        0,
-        0,
-        0,
-        tzinfo=wib
-    ) - timedelta(days=6)
+        start = datetime(
+            now.year,
+            now.month,
+            now.day,
+            0,
+            0,
+            0,
+            tzinfo=wib
+        ) - timedelta(days=6)
 
-    end = datetime(
-        now.year,
-        now.month,
-        now.day,
-        jam,
-        menit,
-        59,
-        tzinfo=wib
+        end = datetime(
+            now.year,
+            now.month,
+            now.day,
+            jam,
+            menit,
+            59,
+            tzinfo=wib
+        )
+
+    # ================= TANPA JAM =================
+    else:
+
+        start = datetime(
+            now.year,
+            now.month,
+            now.day,
+            0,
+            0,
+            0,
+            tzinfo=wib
+        ) - timedelta(days=6)
+
+        end = now
+
+    counts = await proses_rekap(
+        chat,
+        kata_list,
+        start,
+        end
     )
+
+    list_user = await format_hasil_kata(counts)
+
+    if jam is not None:
+        jam_text = f"{jam:02d}:{menit:02d}"
+    else:
+        jam_text = now.strftime("%H:%M")
+
+    hasil = (
+        f"📊 JUMLAH PESAN 7 HARI\n"
+        f"📅 {start.strftime('%d-%m-%Y')} s/d {now.strftime('%d-%m-%Y')}\n"
+        f"🕒 00:00 - {jam_text}\n\n"
+    )
+
+    hasil += f"📝 PESAN DICARI: {', '.join(kata_list)}\n"
+
+    hasil += list_user
+
+    await event.reply(hasil)
 
 # ================= TANPA JAM =================
 else:
