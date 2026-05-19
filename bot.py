@@ -424,19 +424,19 @@ async def rekap7(event):
         )
 
     # TANPA JAM
-else:
+        else:
 
-    start = datetime(
-        now.year,
-        now.month,
-        now.day,
-        0,
-        0,
-        0,
-        tzinfo=wib
-    ) - timedelta(days=6)
+            start = datetime(
+            now.year,
+            now.month,
+            now.day,
+            0,
+            0,
+            0,
+            tzinfo=wib
+        ) - timedelta(days=6)
 
-    end = now
+        end = now
 
 # ================= NABUNG =================
 @client.on(events.NewMessage(pattern=r'^/tambah\s+'))
