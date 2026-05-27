@@ -371,6 +371,369 @@ async def rekap_kemarin(event):
 
     await event.reply(hasil)
 
+# ================= REKAP 2 HARI =================
+@client.on(events.NewMessage(pattern=r'^/rekapkata2(?:\s+(.+))?$'))
+async def rekap2(event):
+
+    if not event.pattern_match.group(1):
+        await event.reply(
+            "Format:\n"
+            "/rekapkata2 kata\n"
+            "/rekapkata2 kata (23)\n"
+            "/rekapkata2 kata (23:59)\n"
+            "/rekapkata2 kata (-100xxxx)\n"
+            "/rekapkata2 kata (-100xxxx) (23:59)"
+        )
+        return
+
+    text = event.pattern_match.group(1)
+
+    chat, kata_list, jam, menit = await ambil_chat_dan_kata(event, text)
+
+    if not chat:
+        return
+
+    wib = timezone(timedelta(hours=7))
+    now = datetime.now(wib)
+
+    hari = now - timedelta(days=2)
+
+    start = datetime(
+        hari.year,
+        hari.month,
+        hari.day,
+        0,
+        0,
+        0,
+        tzinfo=wib
+    )
+
+    if jam is not None:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            jam,
+            menit,
+            59,
+            tzinfo=wib
+        )
+    else:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            23,
+            59,
+            59,
+            tzinfo=wib
+        )
+
+    counts = await proses_rekap(chat, kata_list, start, end)
+
+    list_user = await format_hasil_kata(counts)
+
+    jam_text = f"{jam:02d}:{menit:02d}" if jam is not None else "23:59"
+
+    hasil = (
+        f"📊 JUMLAH PESAN 2 HARI LALU\n"
+        f"📅 {hari.strftime('%d-%m-%Y')}\n"
+        f"🕒 00:00 - {jam_text}\n\n"
+    )
+
+    hasil += f"📝 PESAN DICARI: {', '.join(kata_list)}\n"
+    hasil += list_user
+
+    await event.reply(hasil)
+
+
+# ================= REKAP 3 HARI =================
+@client.on(events.NewMessage(pattern=r'^/rekapkata3(?:\s+(.+))?$'))
+async def rekap3(event):
+
+    if not event.pattern_match.group(1):
+        await event.reply(
+            "Format:\n"
+            "/rekapkata3 kata"
+        )
+        return
+
+    text = event.pattern_match.group(1)
+
+    chat, kata_list, jam, menit = await ambil_chat_dan_kata(event, text)
+
+    if not chat:
+        return
+
+    wib = timezone(timedelta(hours=7))
+    now = datetime.now(wib)
+
+    hari = now - timedelta(days=3)
+
+    start = datetime(
+        hari.year,
+        hari.month,
+        hari.day,
+        0,
+        0,
+        0,
+        tzinfo=wib
+    )
+
+    if jam is not None:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            jam,
+            menit,
+            59,
+            tzinfo=wib
+        )
+    else:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            23,
+            59,
+            59,
+            tzinfo=wib
+        )
+
+    counts = await proses_rekap(chat, kata_list, start, end)
+
+    list_user = await format_hasil_kata(counts)
+
+    jam_text = f"{jam:02d}:{menit:02d}" if jam is not None else "23:59"
+
+    hasil = (
+        f"📊 JUMLAH PESAN 3 HARI LALU\n"
+        f"📅 {hari.strftime('%d-%m-%Y')}\n"
+        f"🕒 00:00 - {jam_text}\n\n"
+    )
+
+    hasil += f"📝 PESAN DICARI: {', '.join(kata_list)}\n"
+    hasil += list_user
+
+    await event.reply(hasil)
+
+
+# ================= REKAP 4 HARI =================
+@client.on(events.NewMessage(pattern=r'^/rekapkata4(?:\s+(.+))?$'))
+async def rekap4(event):
+
+    if not event.pattern_match.group(1):
+        await event.reply(
+            "Format:\n"
+            "/rekapkata4 kata"
+        )
+        return
+
+    text = event.pattern_match.group(1)
+
+    chat, kata_list, jam, menit = await ambil_chat_dan_kata(event, text)
+
+    if not chat:
+        return
+
+    wib = timezone(timedelta(hours=7))
+    now = datetime.now(wib)
+
+    hari = now - timedelta(days=4)
+
+    start = datetime(
+        hari.year,
+        hari.month,
+        hari.day,
+        0,
+        0,
+        0,
+        tzinfo=wib
+    )
+
+    if jam is not None:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            jam,
+            menit,
+            59,
+            tzinfo=wib
+        )
+    else:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            23,
+            59,
+            59,
+            tzinfo=wib
+        )
+
+    counts = await proses_rekap(chat, kata_list, start, end)
+
+    list_user = await format_hasil_kata(counts)
+
+    jam_text = f"{jam:02d}:{menit:02d}" if jam is not None else "23:59"
+
+    hasil = (
+        f"📊 JUMLAH PESAN 4 HARI LALU\n"
+        f"📅 {hari.strftime('%d-%m-%Y')}\n"
+        f"🕒 00:00 - {jam_text}\n\n"
+    )
+
+    hasil += f"📝 PESAN DICARI: {', '.join(kata_list)}\n"
+    hasil += list_user
+
+    await event.reply(hasil)
+
+
+# ================= REKAP 5 HARI =================
+@client.on(events.NewMessage(pattern=r'^/rekapkata5(?:\s+(.+))?$'))
+async def rekap5(event):
+
+    if not event.pattern_match.group(1):
+        await event.reply(
+            "Format:\n"
+            "/rekapkata5 kata"
+        )
+        return
+
+    text = event.pattern_match.group(1)
+
+    chat, kata_list, jam, menit = await ambil_chat_dan_kata(event, text)
+
+    if not chat:
+        return
+
+    wib = timezone(timedelta(hours=7))
+    now = datetime.now(wib)
+
+    hari = now - timedelta(days=5)
+
+    start = datetime(
+        hari.year,
+        hari.month,
+        hari.day,
+        0,
+        0,
+        0,
+        tzinfo=wib
+    )
+
+    if jam is not None:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            jam,
+            menit,
+            59,
+            tzinfo=wib
+        )
+    else:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            23,
+            59,
+            59,
+            tzinfo=wib
+        )
+
+    counts = await proses_rekap(chat, kata_list, start, end)
+
+    list_user = await format_hasil_kata(counts)
+
+    jam_text = f"{jam:02d}:{menit:02d}" if jam is not None else "23:59"
+
+    hasil = (
+        f"📊 JUMLAH PESAN 5 HARI LALU\n"
+        f"📅 {hari.strftime('%d-%m-%Y')}\n"
+        f"🕒 00:00 - {jam_text}\n\n"
+    )
+
+    hasil += f"📝 PESAN DICARI: {', '.join(kata_list)}\n"
+    hasil += list_user
+
+    await event.reply(hasil)
+
+
+# ================= REKAP 6 HARI =================
+@client.on(events.NewMessage(pattern=r'^/rekapkata6(?:\s+(.+))?$'))
+async def rekap6(event):
+
+    if not event.pattern_match.group(1):
+        await event.reply(
+            "Format:\n"
+            "/rekapkata6 kata"
+        )
+        return
+
+    text = event.pattern_match.group(1)
+
+    chat, kata_list, jam, menit = await ambil_chat_dan_kata(event, text)
+
+    if not chat:
+        return
+
+    wib = timezone(timedelta(hours=7))
+    now = datetime.now(wib)
+
+    hari = now - timedelta(days=6)
+
+    start = datetime(
+        hari.year,
+        hari.month,
+        hari.day,
+        0,
+        0,
+        0,
+        tzinfo=wib
+    )
+
+    if jam is not None:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            jam,
+            menit,
+            59,
+            tzinfo=wib
+        )
+    else:
+        end = datetime(
+            hari.year,
+            hari.month,
+            hari.day,
+            23,
+            59,
+            59,
+            tzinfo=wib
+        )
+
+    counts = await proses_rekap(chat, kata_list, start, end)
+
+    list_user = await format_hasil_kata(counts)
+
+    jam_text = f"{jam:02d}:{menit:02d}" if jam is not None else "23:59"
+
+    hasil = (
+        f"📊 JUMLAH PESAN 6 HARI LALU\n"
+        f"📅 {hari.strftime('%d-%m-%Y')}\n"
+        f"🕒 00:00 - {jam_text}\n\n"
+    )
+
+    hasil += f"📝 PESAN DICARI: {', '.join(kata_list)}\n"
+    hasil += list_user
+
+    await event.reply(hasil)
+
 # ================= REKAP 7 HARI =================
 @client.on(events.NewMessage(pattern=r'^/rekapkata7(?:\s+(.+))?$'))
 async def rekap7(event):
